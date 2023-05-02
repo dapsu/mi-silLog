@@ -10,17 +10,17 @@ export class UsersController {
   ) {}
 
   @Post('signup')
-  signup() {
+  signUp() {
     return 'TODO: Create signup controller';
   }
 
   @Post('login')
-  login() {
+  logIn() {
     return 'TODO: Create login controller';
   }
 
   @Post('logout')
-  logout() {
+  logOut() {
     return 'TODO: Create logout controller';
   }
 
