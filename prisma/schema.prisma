@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   email String @unique @db.VarChar(50)
   name String @db.VarChar(20)
   password String @db.VarChar(255)
@@ -21,20 +21,20 @@ model User {
 }
 
 model RefreshToken {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   token String @db.VarChar(255)
   expiresAt DateTime @db.Timestamp() @map("expires_at")
   user User @relation(fields: [userId], references: [id])
-  userId BigInt @unique @map("user_id")
+  userId Int @unique @map("user_id")
   @@map("refresh_token")
 }
 
 model DailyPlan {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   todo String @db.VarChar(100)
   date DateTime @db.Date
   user User @relation(fields: [userId], references: [id])
-  userId BigInt @map("user_id")
+  userId Int @map("user_id")
   dailyFeedback DailyFeedback?
   todoDetails TodoDetail[]
   category Category?
@@ -43,49 +43,50 @@ model DailyPlan {
 }
 
 model DailyFeedback {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   feedback String @db.Text
   dailyPlan DailyPlan @relation(fields: [dailyPlanId], references: [id])
-  dailyPlanId BigInt @unique @map("daily_plan_id")
+  dailyPlanId Int @unique @map("daily_plan_id")
   @@map("daily_feedback")
 }
 
 model Category {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   keyword String @db.VarChar(50)
   dailyPlan DailyPlan @relation(fields: [dailyPlanId], references: [id])
-  dailyPlanId BigInt @unique @map("daily_plan_id")
+  dailyPlanId Int @unique @map("daily_plan_id")
   dailyCompletionPerCategory DailyCompletionPerCategory?
+  @@map("category")
 }
 
 model DailyCompletionPerCategory {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   time DateTime @db.Time()
   degreeOfCompletion Int @default(0) @map("degree_of_completion")
   dailyPlan DailyPlan @relation(fields: [dailyPlanId], references: [id])
-  dailyPlanId BigInt @unique @map("daily_plan_id")
+  dailyPlanId Int @unique @map("daily_plan_id")
   category Category @relation(fields: [categoryId], references: [id])
-  categoryId BigInt @unique @map("category_id")
+  categoryId Int @unique @map("category_id")
   @@map("daily-completion-per-category")
 }
 
 model TodoDetail {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   detailTitle String @db.VarChar(100) @map("detail_title")
   degreeOfCompletion Int @default(0) @map("degree_of_completion")
   dailyPlan DailyPlan @relation(fields: [dailyPlanId], references: [id])
-  dailyPlanId BigInt @map("daily_plan_id")
+  dailyPlanId Int @map("daily_plan_id")
   timelineComponents TimeLineComponent[]
   @@map("todo_details")
 }
 
 model TimeLineComponent {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   todo String @db.VarChar(100)
   startsAt DateTime @db.Timestamp() @map("starts_at")
   endsAt DateTime @db.Timestamp() @map("ends_at")
   isDone Boolean @default(false)
   todoDetail TodoDetail @relation(fields: [todoDetailId], references: [id])
-  todoDetailId BigInt @map("todo_detail_id")
+  todoDetailId Int @map("todo_detail_id")
   @@map("timeline-components")
 }
