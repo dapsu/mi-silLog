@@ -1,5 +1,6 @@
-import { Controller, Post, Delete } from '@nestjs/common';
+import { Controller, Post, Delete, Body } from '@nestjs/common';
 import { AuthService } from '@src/modules/auth/auth.service';
+import { UserRequestDto } from './dto/users.request.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -10,8 +11,8 @@ export class UsersController {
   ) {}
 
   @Post('signup')
-  signUp() {
-    return 'TODO: Create signup controller';
+  async signUp(@Body() body: UserRequestDto) {
+    return await this.usersService.signUp(body);
   }
 
   @Post('login')

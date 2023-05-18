@@ -1,3 +1,15 @@
-import { PickType } from '@nestjs/mapped-types';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class UserRequestDto {}
+export class UserRequestDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+}
